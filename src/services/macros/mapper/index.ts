@@ -1,4 +1,4 @@
-import keyMapping from '../../../../keyMapping.json';
+import keyMapping from '../../../../key.map.json';
 import { IKeyPress, Key } from './types'
 const keys: [Key, IKeyPress][] = Object.entries(keyMapping) as any;
 const keyKeys = ['keycode', 'rawcode', 'altKey', 'ctrlKey', 'metaKey', 'shiftKey'] as const;
