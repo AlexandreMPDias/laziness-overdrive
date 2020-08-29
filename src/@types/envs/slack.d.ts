@@ -15,7 +15,6 @@ export interface ISlackEnvs {
 	 * 
 	 */
 	SLACK_OAUTH: string;
-	SLACK_TOKEN: string;
 
 	/**
 	 * 
