@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"start": "node ./dist/index.js",
-	"build": "tsc",
+    "start": "node ./dist/index.js",
+    "build": "tsc",
     "watch": "tsc --watch",
 	".slackCli": "slackCli",
-	"run": "yarn start && yarn start"
+	"test-keys": "yarn start key.map",
+	"test-keys:short": "yarn start key.map --s",
+    "run": "yarn start && yarn start"
   },
   "author": "",
   "license": "ISC",
@@ -23,10 +25,12 @@
     "chalk": "^4.1.0",
     "date-fns": "^2.16.0",
     "dotenv": "^8.2.0",
-    "iohook": "^0.6.6"
+    "iohook": "^0.6.6",
+    "minimist": "^1.2.5"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/minimist": "^1.2.0",
     "typescript": "^4.0.2"
   }
 }

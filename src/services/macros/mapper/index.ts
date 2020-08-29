@@ -1,10 +1,10 @@
-import keyMapping from '../../../key.map.json';
-import { IKeyPress, Key } from './types'
-const keys: [Key, IKeyPress][] = Object.entries(keyMapping) as any;
+const keyMapping = require('../../../key.map.json');
+import { IKeyPress } from './types'
+const keys: [string, IKeyPress][] = Object.entries(keyMapping) as any;
 const keyKeys = ['keycode', 'rawcode', 'altKey', 'ctrlKey', 'metaKey', 'shiftKey'] as const;
 
 class KeyMapper {
-	public get = (keyPressed: IKeyPress): Key|null => {
+	public get = (keyPressed: IKeyPress): string|null => {
 		return keys.find(([_, values]) => {
 			return (this.isSameKey(values,keyPressed));
 		})?.[0] ?? null;

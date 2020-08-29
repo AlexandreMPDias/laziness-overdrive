@@ -3,10 +3,14 @@ import ioHook from 'iohook';
 import Slack from '../slack';
 
 class Macros {
-	private keyExecution: Partial<Record<Keys.Key, VoidFunction>> = {
+	private keyExecution: Partial<Record<string, VoidFunction>> = {
 		SPC_1: () => {
 			Slack.status.setActive();
 			Slack.status.updateStatus('Working', ':fire:');
+		},
+		SPC_2: () => {
+			Slack.status.setInactive();
+			Slack.status.updateStatus('Away~', ':away:');
 		},
 	}
 
