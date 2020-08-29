@@ -1,4 +1,4 @@
-import keyMapping from '../../../../key.map.json';
+import keyMapping from '../../../key.map.json';
 
 export type Key = keyof typeof keyMapping
 

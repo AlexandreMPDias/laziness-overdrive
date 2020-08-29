@@ -9,8 +9,9 @@
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": "./src",
+		"rootDir": "./src"
 	},
 	"lib": ["es2015"],
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "./key.map.json"],
 	"exclude": ["node_modules"]
 }
