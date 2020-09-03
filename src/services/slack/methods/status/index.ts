@@ -33,8 +33,7 @@ class SlackStatus extends SlackRequestClass{
 				"status_expiration": unixTime
 			}
 		}
-		console.log(`Setting status [ ${chalk.yellow(text)} | ${chalk.yellow(emoji)} ]`);
-		process.stdout.write(`Expires in [ ${chalk.yellow(expiration)} hours ]\n`);
+		console.log(`Setting status [ ${chalk.yellow(text)} | ${chalk.yellow(emoji)} ] - Expires in [ ${chalk.yellow(expiration)} hours ]`);
 		return this.post('users.profile.set', data)
 	}
 }

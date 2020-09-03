@@ -1,29 +1,30 @@
 import KeyMap, * as Keys from './mapper';
 import ioHook from 'iohook';
-import Slack from '../slack';
+import chalk from 'chalk';
+import Loader from './loader';
+import Parser from './parser';
 
 class Macros {
-	private keyExecution: Partial<Record<string, VoidFunction>> = {
-		SPC_1: () => {
-			Slack.status.setActive();
-			Slack.status.updateStatus('Working', ':fire:');
-		},
-		SPC_2: () => {
-			Slack.status.setInactive();
-			Slack.status.updateStatus('Away~', ':away:');
-		},
+	public init = () => {
+		KeyMap.init();
+		Loader.init();
+
+		console.log(`Initializing [ ${chalk.redBright('Macros')} ]`);
+		
+		this.initKeyDownListener();
 	}
 
-	public init = () => {
+	private initKeyDownListener = () => {
+		console.log(`Initializing [ ${chalk.blueBright('KeyDown Listener')} ]`)
 		ioHook.on('keydown', (keyPress: Keys.IKeyPress) => {
-			const key = KeyMap.get(keyPress);
-			if(key) {
-				const action = this.keyExecution[key];
-				if(action) {
-					action();
+				const key = KeyMap.get(keyPress);
+				if(key) {
+					const actions = Loader.getCommand(key);
+					Promise.all(actions.map(async action => {
+						await Parser.handle(action.cmd, action.args);
+					}))
 				}
-			}
-		})
+			})
 	}
 }
 

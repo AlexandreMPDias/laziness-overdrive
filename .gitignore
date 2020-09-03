@@ -22,6 +22,7 @@ coverage
 # API keys and secrets
 .env
 key.map.json
+key.macros.json
 
 # Dependency directory
 node_modules

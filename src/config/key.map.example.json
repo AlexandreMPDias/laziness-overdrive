@@ -1,0 +1,7 @@
+{
+	"LALT": { "altKey": true,"keycode": 56, "rawcode": 164},
+	"SPC_1": { "keycode": 57452, "rawcode": 182},
+	"SPC_2": {"keycode": 57394, "rawcode": 172},
+	"SPC_3": {"keycode": 0, "rawcode": 180},
+	"SPC_4": {"keycode": 57445, "rawcode": 170}
+}
