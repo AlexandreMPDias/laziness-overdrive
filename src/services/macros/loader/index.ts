@@ -7,8 +7,6 @@ class MacroLoader {
 
 	public init = () => {
 		this.commands = Filer.require('config/key.macros.json');
-		console.log(this.commands)
-
 	}
 
 	public getCommand = (key: string): types.SingleMacroCommand[] => {
