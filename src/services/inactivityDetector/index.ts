@@ -1,7 +1,7 @@
 Promise = require('bluebird');
 import ioHook from 'iohook';
 import Bluebird from 'bluebird';
-import Slack from '../slack';
+import Slack from '../../apis/slack';
 import chalk from 'chalk';
 
 class InactivityDetector {
@@ -18,14 +18,14 @@ class InactivityDetector {
 		this.lastMove = new Date().getTime();
 		setInterval(() => {
 			const delta = new Date().getTime() - this.lastMove;
-			if(delta > 1000) {
+			if (delta > 1000) {
 				console.log(`Inactivity detected of [ ${(delta / 1000 / 60).toFixed(0).padStart(2, '0')} minutes ]`);
 			}
 		}, 60 * 1000);
 		console.log(`Initializing [ ${chalk.redBright('Inactivity Detection')} ]`);
 		console.log(`Inactivity set to [ ${chalk.green(InactivityDetector.WAITING_TIME + ' minute')} ]`)
 		ioHook.on('mousemove', this.setTimer);
-		ioHook.on('keydown',this.setTimer);
+		ioHook.on('keydown', this.setTimer);
 	}
 
 	private setTimer = async () => {

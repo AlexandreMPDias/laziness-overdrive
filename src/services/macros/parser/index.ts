@@ -1,17 +1,17 @@
 import * as types from '../types';
-import Slack from '../../slack';
+import Slack from '../../../apis/slack';
 
 class MacroParser {
 
-	private handler: Record<types.SingleMacroCommand['cmd'], (args: any) => (Promise<void>|void)> = {
+	private handler: Record<types.SingleMacroCommand['cmd'], (args: any) => (Promise<void> | void)> = {
 		"slack.update.user.presence": (args: types.MacroCommandDeclaration['setPresence']['args']) => {
-			if(args.presence === 'auto') {
+			if (args.presence === 'auto') {
 				return Slack.status.setActive()
 			}
 			return Slack.status.setInactive();
 		},
 		"slack.update.user.status": (args: types.MacroCommandDeclaration['setStatus']['args']) => {
-			if(typeof args === 'string') {
+			if (typeof args === 'string') {
 				const message = (() => {
 					const day = new Date().getDay();
 					const templates = ['Segundou', 'Terçou', 'Quartou', 'Quintou', 'Sextou'];
@@ -24,7 +24,7 @@ class MacroParser {
 		}
 	}
 
-	public handle = (cmd: types.SingleMacroCommand['cmd'], arg: any): Promise<void>|void => {
+	public handle = (cmd: types.SingleMacroCommand['cmd'], arg: any): Promise<void> | void => {
 		return this.handler[cmd]?.(arg);
 	}
 
