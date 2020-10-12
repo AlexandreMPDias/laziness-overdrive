@@ -38,15 +38,18 @@ export class ClickUpRequestClass {
 		return new ClickUpRequestClass(baseUrl, responseResolver);
 	}
 
-	private attempt = (url: string, request: (() => Promise<any>)) => {
+	private attempt = async (url: string, request: (() => Promise<any>)) => {
 		try {
-			return request();
+			const response = await request();
+			return response;
+
 		} catch (err) {
 			console.log(chalk.redBright(`Request on url [${url}] failed.`));
-			console.log(err)
+			console.log(err.response)
 			process.exit(1);
 		}
 	}
+
 }
 
 export default new ClickUpRequestClass();

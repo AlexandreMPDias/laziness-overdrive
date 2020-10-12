@@ -1,19 +1,16 @@
 // import Runner from './runner';
 import chalk from 'chalk';
 import { SlackRequestClass } from '../../utils/request';
-import clickUp from '../../../clickUp'
 import * as types from './types';
 
 class SlackStatus extends SlackRequestClass {
 	setActive = async () => {
 		console.log(`Setting ${chalk.green('active')}`)
-		await clickUp.timeTrack.start();
 		return this.post('users.setPresence', { presence: 'auto' })
 	}
 
 	setInactive = async () => {
 		console.log(`Setting ${chalk.red('inactive')}`)
-		await clickUp.timeTrack.stop();
 		return this.post('users.setPresence', { presence: 'away' })
 
 	}

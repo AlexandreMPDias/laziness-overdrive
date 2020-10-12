@@ -5,14 +5,23 @@ export interface MacroCommandDeclaration {
 			presence: 'auto' | 'away'
 		}
 	},
-	setStatus : {
+	setStatus: {
 		cmd: 'slack.update.user.status',
 		args: {
 			text: string,
 			emoji: string,
 			expiration: number,
 		} | 'sextou'
+	},
+	resumeLastTask: {
+		cmd: 'clickUp.task.resume',
+		args: {}
+	},
+	stopRunningTask: {
+		cmd: 'clickUp.task.stop',
+		args: {}
 	}
+
 }
 
 export type SingleMacroCommand = MacroCommandDeclaration[keyof MacroCommandDeclaration];

@@ -1,47 +1,53 @@
 [
-	{
-		"key": "SPC_1",
-		"actions": [
-			{
-				"cmd": "slack.update.user.status",
-				"args": {
-					"text": "Working",
-					"emoji": ":fire:"
-				}
-			},
-			{
-				"cmd": "slack.update.user.presence",
-				"args": {
-					"presence": "auto"
-				}
-			}
-		]
-	},
-	{
-		"key": "SPC_2",
-		"actions": [
-			{
-				"cmd": "slack.update.user.status",
-				"args": {
-					"text": "Away~",
-					"emoji": ":away:"
-				}
-			},
-			{
-				"cmd": "slack.update.user.presence",
-				"args": {
-					"presence": "away"
-				}
-			}
-		]
-	},
-	{
-		"key": "SPC_3",
-		"actions": [
-			{
-				"cmd": "slack.update.user.status",
-				"args": "sextou"
-			}
-		]
-	}
+  {
+    "key": "SPC_1",
+    "actions": [
+      {
+        "cmd": "slack.update.user.status",
+        "args": {
+          "text": "Working",
+          "emoji": ":fire:"
+        }
+      },
+      {
+        "cmd": "slack.update.user.presence",
+        "args": {
+          "presence": "auto"
+        }
+      },
+      {
+        "cmd": "clickUp.task.resume"
+      }
+    ]
+  },
+  {
+    "key": "SPC_2",
+    "actions": [
+      {
+        "cmd": "slack.update.user.status",
+        "args": {
+          "text": "Away~",
+          "emoji": ":away:"
+        }
+      },
+      {
+        "cmd": "slack.update.user.presence",
+        "args": {
+          "presence": "away"
+        }
+      }
+    ]
+  },
+  {
+    "key": "SPC_3",
+    "actions": [
+      {
+        "cmd": "slack.update.user.status",
+        "args": "sextou"
+      },
+      {
+        "cmd": "clickUp.task.stop"
+      }
+    ]
+  }
 ]
