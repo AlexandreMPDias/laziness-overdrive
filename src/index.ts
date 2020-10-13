@@ -1,5 +1,4 @@
 import "./config";
-import "./state";
 import minimist from 'minimist';
 import iohook from 'iohook';
 import * as service from './services'
