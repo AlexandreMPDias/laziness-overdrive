@@ -9,6 +9,7 @@ const argv = minimist(process.argv.slice(2));
 
 function keyMap() {
 	console.log(`Starting in [ ${chalk.red('key.map')} ] mode`)
+	service.KeyTest.finalMode = argv.f;
 	service.KeyTest.shortMode = argv.s;
 	service.KeyTest.init();
 	console.log(`Initializing [ ${chalk.blue('iohook')} ]`);

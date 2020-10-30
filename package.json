@@ -7,10 +7,11 @@
     "start": "node ./dist/index.js",
     "build": "tsc",
     "watch": "tsc --watch",
-	".slackCli": "slackCli",
-	"test-keys": "yarn start key.map",
-	"test-keys:short": "yarn start key.map --s",
-    "run": "yarn start && yarn start"
+    ".slackCli": "slackCli",
+    "test-keys": "yarn start key.map",
+    "test-keys:short": "yarn start key.map --s",
+    "run": "yarn start && yarn start",
+    "test-keys:final": "yarn start key.map --f"
   },
   "author": "",
   "license": "ISC",
