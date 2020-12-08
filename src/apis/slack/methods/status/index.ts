@@ -5,14 +5,19 @@ import * as types from './types';
 
 class SlackStatus extends SlackRequestClass {
 	setActive = async () => {
-		console.log(`Setting ${chalk.green('active')}`)
+		console.log(`Setting ${chalk.yellow("Slack.presence")} to ${chalk.green('active')}`)
 		return this.post('users.setPresence', { presence: 'auto' })
 	}
 
 	setInactive = async () => {
-		console.log(`Setting ${chalk.red('inactive')}`)
+		console.log(`Setting ${chalk.yellow("Slack.presence")} to ${chalk.red('inactive')}`)
 		return this.post('users.setPresence', { presence: 'away' })
 
+	}
+
+	getStatus = async (): Promise<{ presence: string, online: boolean, last_activity: number }> => {
+		const response = await this.get<{ data: { presence: string, online: boolean, last_activity: number } }>('users.getPresence')
+		return response.data
 	}
 
 	/**

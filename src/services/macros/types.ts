@@ -1,34 +1,35 @@
 export interface MacroCommandDeclaration {
 	setPresence: {
-		cmd: 'slack.update.user.presence',
+		cmd: "slack.update.user.presence";
 		args: {
-			presence: 'auto' | 'away'
-		}
-	},
+			presence: "auto" | "away";
+		};
+	};
 	setStatus: {
-		cmd: 'slack.update.user.status',
-		args: {
-			text: string,
-			emoji: string,
-			expiration: number,
-		} | 'sextou'
-	},
+		cmd: "slack.update.user.status";
+		args:
+		| {
+			text: string;
+			emoji: string;
+			expiration: number;
+		}
+		| "sextou";
+	};
 	resumeLastTask: {
-		cmd: 'clickUp.task.resume',
-		args: {}
-	},
+		cmd: "clickUp.task.resume";
+		args: {};
+	};
 	stopRunningTask: {
-		cmd: 'clickUp.task.stop',
-		args: {}
-	}
-
+		cmd: "clickUp.task.stop";
+		args: {};
+	};
 }
 
 export type SingleMacroCommand = MacroCommandDeclaration[keyof MacroCommandDeclaration];
 
 export interface MacroCommandRegistration {
-	key: string,
-	actions: SingleMacroCommand[]
+	key: string;
+	actions: SingleMacroCommand[];
 }
 
-export type MacroCommand = MacroCommandRegistration[]
+export type MacroCommand = MacroCommandRegistration[];

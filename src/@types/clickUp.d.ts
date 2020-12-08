@@ -1,5 +1,4 @@
 declare namespace ClickUp {
-
 	export interface Task {
 		id: string;
 		name: string;
@@ -40,12 +39,39 @@ declare namespace ClickUp {
 
 declare namespace ClickUp.Task {
 	export interface Status {
-		status: ClickUp.Task.Status.Type, color: string, type: 'open', orderindex: number
+		status: ClickUp.Task.Status.Type;
+		color: string;
+		type: "open";
+		orderindex: number;
+	}
+
+	export interface Request {
+		name: string;
+		description?: string;
+		assignees?: string[];
+		tags?: string[];
+		status?: ClickUp.Task.Status.Type;
+		priority?: number;
+		due_date?: number;
+		due_date_time?: boolean;
+		time_estimate?: number;
+		start_date?: number;
+		start_date_time?: boolean;
+		notify_all?: boolean;
+		parent?: any;
+		links_to?: any;
+		check_required_custom_fields?: boolean;
+		custom_fields?: any[];
 	}
 }
 
 declare namespace ClickUp.Task.Status {
-	export type Type = 'a fazer' | 'em andamento' | 'em espera' | 'code review' | 'concluido'
+	export type Type =
+		| "a fazer"
+		| "em andamento"
+		| "em espera"
+		| "code review"
+		| "concluido";
 }
 
 /**

@@ -18,7 +18,7 @@ export class SlackRequestClass {
 		return this.attempt(url, () => this.axios.post(url, data));
 	}
 
-	public get = (url: string) => {
+	public get = <Data = any>(url: string): Promise<Data> => {
 		return this.attempt(url, () => this.axios.get(url));
 	}
 
@@ -30,7 +30,7 @@ export class SlackRequestClass {
 			console.log(chalk.redBright(`Request on url [${url}] failed.`));
 			console.log(err)
 			process.exit(1);
-		} 
+		}
 	}
 
 }

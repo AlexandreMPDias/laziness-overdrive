@@ -1,10 +1,11 @@
 import "./config";
+// import './services/temp';
+
 import minimist from 'minimist';
 import iohook from 'iohook';
 import * as service from './services'
 import * as api from './apis';
 import chalk from "chalk";
-
 const argv = minimist(process.argv.slice(2));
 
 function keyMap() {
