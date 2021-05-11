@@ -10,7 +10,7 @@
     ".slackCli": "slackCli",
     "test-keys": "yarn start key.map",
     "test-keys:short": "yarn start key.map --s",
-    "run": "yarn start && yarn start",
+    "lazy": "yarn start",
     "test-keys:final": "yarn start key.map --f"
   },
   "author": "",
