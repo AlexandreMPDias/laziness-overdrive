@@ -1,7 +1,7 @@
 import { IKeyPressListener } from '../protocols';
 import { IKeyPressMatcher, IKeyPressParser } from '../protocols/helpers';
 
-import { IUnknownKeyPress, IKeyPressEvent, DirtyListener, Key } from '../types';
+import { IUnknownKeyPress, DirtyListener, Key } from '../types';
 
 export class KeyPressListenerAdapter implements IKeyPressListener {
 	private readonly subscriptions: Partial<Record<Key, Array<IKeyPressListener.RegisterCallback>>>;

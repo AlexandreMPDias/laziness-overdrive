@@ -6,7 +6,7 @@ export async function execute(): Promise<void> {
 
 	const argv = minimist(process.argv.slice(2));
 	const {
-		_: [name, ...args],
+		_: [name = '', ...args],
 	} = argv;
 
 	if (name.match(/^key/)) {

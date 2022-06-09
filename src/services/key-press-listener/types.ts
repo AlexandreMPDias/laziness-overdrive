@@ -1,4 +1,4 @@
-import { iohook } from 'iohook';
+import iohook from 'iohook';
 import { Keys } from '../../config/keycode-mapping';
 
 export type Key = Keys;

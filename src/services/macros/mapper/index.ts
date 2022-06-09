@@ -24,6 +24,10 @@ export class KeyMapper {
 		);
 	};
 
+	public getCode = (keyName: string): IKeyPress | null => {
+		return this.keys.find(([key]) => keyName === key)?.[1] ?? null;
+	};
+
 	public update = (nextValues: Record<string, IKey>): void => {
 		this.refresh(nextValues);
 		Filer.update('config/key.map.json', this.source);
@@ -39,6 +43,7 @@ export class KeyMapper {
 		specialKey: (keyPress?: IKeyPress): boolean => {
 			if (!keyPress) return false;
 			const specials = Object.keys(this.specialKeys);
+			console.log({ specials: this.specialKeys });
 			return specials.some(specialKeysKey => {
 				const events = this.specialKeys[specialKeysKey];
 				return events.some(keyEvent => this.isSameKey(keyEvent, keyPress, 'short'));

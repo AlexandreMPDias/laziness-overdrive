@@ -25,6 +25,8 @@ export class KeyboardSetupAdapter {
 
 		const keys = this.consts.keys.filter(key => !KeyMapper.is.knownKey(key));
 
+		this.esc = KeyMapper.getCode('esc');
+
 		this.iter = new KeyIterator(keys, this.consts.name);
 
 		this.iter.on('start', () => {
@@ -48,27 +50,27 @@ export class KeyboardSetupAdapter {
 
 	public start = () => {
 		ioHook.on('keydown', this.onKeyDown);
+		ioHook.on('keyup', this.onKeyUp);
 		this.iter.start();
 	};
 
-	private onKeyDown = (keyPress: IKeyPress) => {
-		if (!this.iter.has('started')) {
-			console.log(this.iter.currentKey);
-			return;
-		}
-		if (this.iter.step === 0) {
+	private onKeyUp = () => {
+		const keyPress = this.iter.compileDownKeys();
+		if (!this.esc) {
 			this.esc = keyPress;
-		} else if (KeyMapper.isSameKey(keyPress, this.esc)) {
-			this.iter.abort();
+		}
+		if (!keyPress) {
+			console.log('Error - key-up receveid without a down key');
 			return;
 		}
-
 		const isKnownKey = KeyMapper.is.knownKey(keyPress);
 
 		if (isKnownKey) {
 			if (!KeyMapper.is.specialKey(keyPress)) {
+				console.log('not-special-key', keyPress);
 				this.iter.next();
 			}
+			console.log('is-known-key', keyPress);
 			return;
 		}
 
@@ -77,6 +79,18 @@ export class KeyboardSetupAdapter {
 
 		console.log('\n');
 		this.pressKey(this.iter.currentKey);
+	};
+
+	private onKeyDown = (keyPress: IKeyPress) => {
+		if (!this.iter.has('started')) {
+			console.log(this.iter.currentKey);
+			return;
+		}
+		if (this.esc && KeyMapper.isSameKey(keyPress, this.esc)) {
+			this.iter.abort();
+			return;
+		}
+		this.iter.appendDown(keyPress);
 	};
 
 	private saveRecord = ({ keycode, rawcode }: IKeyPress) => {

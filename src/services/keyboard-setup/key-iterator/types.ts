@@ -1,4 +1,4 @@
-import { IKeyPress } from '../types';
+export { IKeyPress } from '../types';
 
 export interface KeyIteratorEventCallback {
 	start: () => void;

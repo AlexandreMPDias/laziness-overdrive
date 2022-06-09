@@ -1,8 +1,10 @@
-import { KeyIteratorEventCallback, KeyIteratorEvent } from './types';
+import { KeyIteratorEventCallback, KeyIteratorEvent, IKeyPress } from './types';
 
 export class KeyIterator {
 	private readonly iterator = { step: -1, done: false, max: -1 };
 	private readonly eventListeners: Partial<KeyIteratorEventCallback> = {};
+
+	public downs: IKeyPress[] = [];
 
 	constructor(
 		private readonly keys: string[],
@@ -62,6 +64,36 @@ export class KeyIterator {
 			ended: this.iterator.done,
 		};
 		return states[state];
+	};
+
+	public appendDown = (down: IKeyPress) => {
+		this.downs.push(down);
+		return this;
+	};
+
+	public compileDownKeys = (): IKeyPress | null => {
+		const downs = Array.from(this.downs);
+		this.downs = [];
+		if (downs.length === 0) return null;
+		if (downs.length === 1) return downs[0];
+		return downs.reduce((down, reduced) => {
+			const isMeta =
+				reduced.altKey ||
+				reduced.ctrlKey ||
+				reduced.shiftKey ||
+				reduced.metaKey ||
+				!reduced.keycode;
+			if (isMeta) {
+				down.altKey = down.altKey || reduced.altKey;
+				down.ctrlKey = down.ctrlKey || reduced.ctrlKey;
+				down.metaKey = down.metaKey || reduced.metaKey;
+				down.shiftKey = down.shiftKey || reduced.shiftKey;
+			} else {
+				const { keycode, rawcode } = reduced;
+				Object.assign(down, { keycode, rawcode });
+			}
+			return down;
+		}, {} as IKeyPress);
 	};
 }
 
