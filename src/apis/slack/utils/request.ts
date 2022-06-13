@@ -22,9 +22,7 @@ export class SlackRequestClass {
 
 	private attempt = async (url: string, request: () => Promise<any>) => {
 		try {
-			console.log('execute request to ' + url);
 			const response = await request();
-			console.log('response', response.data);
 			return response;
 		} catch (err) {
 			console.log(chalk.redBright(`Request on url [${url}] failed.`));

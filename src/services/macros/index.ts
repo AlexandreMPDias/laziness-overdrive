@@ -23,7 +23,6 @@ class Macros {
 		console.log(`Initializing [ ${chalk.blueBright('KeyDown Listener')} ]`);
 		ioHook.on('keyup', (keyPress: IKeyPress) => {
 			this.down = this.down.filter(key => !key.equals(Key.eventToMetadata(keyPress)));
-			console.log(this.down.map(x => x.name));
 		});
 		ioHook.on('keydown', (keyPress: IKeyPress) => {
 			const metadata = Key.eventToMetadata(keyPress);
@@ -33,7 +32,7 @@ class Macros {
 			if (!name) return;
 
 			this.down.push(new Key(metadata, name));
-			console.log(this.down.map(x => x.name));
+			// console.log(this.down.map(x => x.name));
 
 			const actions = Loader.getCommand(this.down);
 			if (!actions.length) return;
