@@ -16,11 +16,19 @@ export interface MacroCommandDeclaration {
 			| 'sextou';
 	};
 	resumeLastTask: {
-		cmd: 'clickUp.task.resume';
-		args: {};
+		cmd: 'timer.task.resume';
+		args: {
+			provider?: 'clickUp' | 'toggl';
+		};
 	};
 	stopRunningTask: {
-		cmd: 'clickUp.task.stop';
+		cmd: 'timer.task.stop';
+		args: {
+			provider?: 'clickUp' | 'toggl';
+		};
+	};
+	toggleTimer: {
+		cmd: 'timer.toggle';
 		args: {};
 	};
 }

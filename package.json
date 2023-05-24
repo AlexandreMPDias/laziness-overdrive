@@ -1,37 +1,41 @@
 {
-  "name": "laziness-overdrive",
-  "version": "0.0.1-beta",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node ./dist/index.js",
-    "build": "tsc",
-    "watch": "tsc --watch",
-    ".slackCli": "slackCli",
-    "test-keys": "yarn start key.map",
-    "test-keys:short": "yarn start key.map --s",
-    "lazy": "yarn start",
-    "test-keys:final": "yarn start key.map --f"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.20.0",
-    "bluebird": "^3.7.2",
-    "chalk": "^4.1.0",
-    "date-fns": "^2.16.0",
-    "dotenv": "^8.2.0",
-    "iohook": "0.6.6",
-    "minimist": "^1.2.5"
-  },
-  "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/bluebird": "^3.5.32",
-    "@types/bluebird-global": "^3.5.12",
-    "@types/date-fns": "^2.6.0",
-    "@types/events": "^3.0.0",
-    "@types/minimist": "^1.2.0",
-    "@types/node": "^14.6.2",
-    "typescript": "^4.0.2"
-  }
+	"name": "laziness-overdrive",
+	"version": "0.0.1-beta",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node ./dist/index.js",
+		"build": "tsc",
+		"watch": "tsc --watch",
+		".slackCli": "slackCli",
+		"test-keys": "yarn start key.map",
+		"test-keys:short": "yarn start key.map --s",
+		"lazy": "yarn start",
+		"test-keys:final": "yarn start key.map --f",
+		"postinstall": "patch-package"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.20.0",
+		"bluebird": "^3.7.2",
+		"chalk": "^4.1.0",
+		"date-fns": "^2.16.0",
+		"dotenv": "^8.2.0",
+		"iohook": "0.6.6",
+		"minimist": "^1.2.5",
+		"patch-package": "^7.0.0",
+		"yargs": "^17.7.2"
+	},
+	"devDependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/bluebird": "^3.5.32",
+		"@types/bluebird-global": "^3.5.12",
+		"@types/date-fns": "^2.6.0",
+		"@types/events": "^3.0.0",
+		"@types/minimist": "^1.2.0",
+		"@types/node": "^14.6.2",
+		"@types/yargs": "^17.0.24",
+		"typescript": "^4.0.2"
+	}
 }

@@ -17,24 +17,23 @@ class Macros {
 
 	private actionDebounce: Record<string, number> = {};
 
-	private down: Key[] = [];
+	private downKeys: Key[] = [];
 
 	private initKeyDownListener = () => {
 		console.log(`Initializing [ ${chalk.blueBright('KeyDown Listener')} ]`);
 		ioHook.on('keyup', (keyPress: IKeyPress) => {
-			this.down = this.down.filter(key => !key.equals(Key.eventToMetadata(keyPress)));
+			this.downKeys = this.downKeys.filter(key => !key.equals(Key.eventToMetadata(keyPress)));
 		});
 		ioHook.on('keydown', (keyPress: IKeyPress) => {
 			const metadata = Key.eventToMetadata(keyPress);
-			if (this.down.find(downKey => downKey.equals(metadata))) return;
+			if (this.downKeys.find(downKey => downKey.equals(metadata))) return;
 
 			const name = KeyMap.get(keyPress);
 			if (!name) return;
 
-			this.down.push(new Key(metadata, name));
-			// console.log(this.down.map(x => x.name));
+			this.downKeys.push(new Key(metadata, name));
 
-			const actions = Loader.getCommand(this.down);
+			const actions = Loader.getCommand(this.downKeys);
 			if (!actions.length) return;
 
 			Promise.all(

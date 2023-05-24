@@ -1,26 +1,27 @@
-import minimist from 'minimist';
-import * as commands from './use-cases';
+import { Command } from './helpers/command';
 
 export async function execute(): Promise<void> {
 	await import('../config');
 
-	const argv = minimist(process.argv.slice(2));
-	const {
-		_: [name = '', ...args],
-	} = argv;
+	const commands = await import('./use-cases');
 
-	if (name.match(/^key/)) {
-		const mode = !!argv.f ? 'full' : 'short';
-		if (name === 'key.map') {
-			return commands.keyMap(mode);
-		} else if (name === 'key.setup') {
-			return commands.keySetup(mode);
-		} else {
-			console.warn('No command matched: ', name);
-		}
-	} else if (name === 'clickUp') {
-		const key = args[0];
-		return commands.clickUp(key as any);
-	}
-	return commands.start();
+	const keyNameMap: Record<string, Command> = {};
+	const KEYS = Object.values(commands).map(command => {
+		keyNameMap[command.name] = command;
+		return command.name;
+	});
+
+	const cmd = new Command({
+		command: '<command>',
+		description: 'Run a command',
+		depth: 0,
+	}).positional('command', {
+		describe: 'command to run',
+		choices: KEYS,
+		demandOption: true,
+	});
+
+	const { command } = cmd.parse();
+
+	await keyNameMap[command].execute();
 }

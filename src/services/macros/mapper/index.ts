@@ -19,7 +19,7 @@ export class KeyMapper {
 	public get = (keyPressed: IKeyPress): string | null => {
 		return (
 			this.keys.find(([_, values]) => {
-				return this.isSameKey(values, keyPressed);
+				return this.isSameKey(values, keyPressed, 'short');
 			})?.[0] ?? null
 		);
 	};
@@ -43,7 +43,6 @@ export class KeyMapper {
 		specialKey: (keyPress?: IKeyPress): boolean => {
 			if (!keyPress) return false;
 			const specials = Object.keys(this.specialKeys);
-			console.log({ specials: this.specialKeys });
 			return specials.some(specialKeysKey => {
 				const events = this.specialKeys[specialKeysKey];
 				return events.some(keyEvent => this.isSameKey(keyEvent, keyPress, 'short'));

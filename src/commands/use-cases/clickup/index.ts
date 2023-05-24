@@ -1,24 +1,25 @@
 import { Importer, Log } from '../../helpers';
+import { Command } from '../../helpers/command';
 
-async function __teams() {
-	const { apis } = await Importer.import('apis');
-	apis.ClickUp.teams.listMyTeams();
-}
+const KEYS = ['teams', 'test'] as const;
 
-async function __test() {
-	const { apis } = await Importer.import('apis');
-	apis.ClickUp.teams.listMyTeams();
-}
+export default new Command({
+	command: '<key>',
+	description: 'Run clickup commands',
+	name: 'clickup',
+	depth: 1,
+})
+	.positional('key', {
+		choices: KEYS,
+		demandOption: true,
+		description: 'subcommand to execute',
+	})
+	.withHandle(async ({ key }) => {
+		Log.starting.mode(`clickUp.${key}`);
+		const { apis } = await Importer.import('apis');
 
-const commands = {
-	teams: __teams,
-	test: __test,
-};
-
-export function clickUp(key: keyof typeof commands) {
-	Log.starting.mode(`clickUp.${key}`);
-
-	const command = commands[key];
-
-	return command();
-}
+		return {
+			teams: () => apis.ClickUp.teams.listMyTeams(),
+			test: () => apis.ClickUp.teams.listMyTeams(),
+		}[key]();
+	});

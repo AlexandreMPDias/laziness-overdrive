@@ -1,3 +1,4 @@
-export * from './clickup';
-export * from './keyboard';
-export * from './start';
+export { default as clickUpCommand } from './clickup';
+export { default as keyboardMapCommand } from './keyboard.map';
+export { default as keyboardSetupCommand } from './keyboard.setup';
+export { default as listenerCommand } from './listener';
