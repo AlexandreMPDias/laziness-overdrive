@@ -1,10 +1,10 @@
-import chalk from "chalk";
-import ClickUpApi from "../utils/request";
-import models from "../../../models";
+import chalk from 'chalk';
+import ClickUpApi from '../utils/request';
+import models from '../../../models';
 
 const api = ClickUpApi.instance(
 	`team/${process.env.CLICKUP_TEAM_ID}/time_entries/`,
-	(response) => response.data.data
+	response => response.data.data
 );
 
 class ClickUpTimeTrackConstructor {
@@ -18,12 +18,11 @@ class ClickUpTimeTrackConstructor {
 	 * or the request fails.
 	 */
 	start = async (timeTrack: ClickUp.TimeTrack | null = null): Promise<void> => {
-		await api.post("stop");
-		const selectedTimeTrack =
-			timeTrack || (await this.getMostRecentTimeEntry());
+		await api.post('stop');
+		const selectedTimeTrack = timeTrack || (await this.getMostRecentTimeEntry());
 
 		if (selectedTimeTrack) {
-			this.logTimeTrack(selectedTimeTrack, "starting");
+			this.logTimeTrack(selectedTimeTrack, 'starting');
 			if (!selectedTimeTrack.billable) {
 				const nextTimeTrack: ClickUp.TimeTrack = {
 					...selectedTimeTrack,
@@ -35,6 +34,13 @@ class ClickUpTimeTrackConstructor {
 		}
 	};
 
+	startForTask = async (task: { id: string; team_id: string }) => {
+		await api.post('stop');
+		await ClickUpApi.post(`team/${task.team_id}/time_entries/start`, {
+			tid: task.id,
+		});
+	};
+
 	/**
 	 * Stop the currently running Time Track
 	 *
@@ -44,8 +50,8 @@ class ClickUpTimeTrackConstructor {
 	stop = async (): Promise<void> => {
 		const selectedTimeTrack = await api.get(`current`);
 		if (selectedTimeTrack) {
-			this.logTimeTrack(selectedTimeTrack, "stopping");
-			await api.post("stop");
+			this.logTimeTrack(selectedTimeTrack, 'stopping');
+			await api.post('stop');
 		}
 	};
 
@@ -57,10 +63,7 @@ class ClickUpTimeTrackConstructor {
 	 *
 	 * @return {void}
 	 */
-	private logTimeTrack = (
-		timeTrack: ClickUp.TimeTrack,
-		message: string
-	): void => {
+	private logTimeTrack = (timeTrack: ClickUp.TimeTrack, message: string): void => {
 		const id = models.clickUp.timeTrack.getHumanFriendlyId(timeTrack);
 		console.log(`[ ${chalk.cyan(id)} ]: ${message}`);
 	};
@@ -75,7 +78,7 @@ class ClickUpTimeTrackConstructor {
 	 * @return {Promise<ClickUp.TimeTrack>}
 	 */
 	private getMostRecentTimeEntry = async (): Promise<ClickUp.TimeTrack> => {
-		return this.sortTimeTracks(await api.get(""))[0];
+		return this.sortTimeTracks(await api.get(''))[0];
 	};
 
 	/**
@@ -85,9 +88,7 @@ class ClickUpTimeTrackConstructor {
 	 *
 	 * @return {ClickUp.TimeTrack[]} returns a copy of the array, not modifying it.
 	 */
-	private sortTimeTracks = (
-		timeTracks: ClickUp.TimeTrack[]
-	): ClickUp.TimeTrack[] => {
+	private sortTimeTracks = (timeTracks: ClickUp.TimeTrack[]): ClickUp.TimeTrack[] => {
 		const timeEntries: ClickUp.TimeTrack[] = [...timeTracks];
 		timeEntries.sort((t1, t2) => {
 			if (t1.start > t2.start) {

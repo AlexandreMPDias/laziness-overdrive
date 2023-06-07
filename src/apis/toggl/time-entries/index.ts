@@ -47,12 +47,12 @@ class TogglTimeEntriesLoad {
 		return this.start();
 	};
 
-	stop = async (team?: toggl.TimeTrack): Promise<boolean> => {
-		if (!team) team = await this.current();
-		if (!team) return false;
-		const { workspace_id, id } = team;
+	stop = async (time?: toggl.TimeTrack): Promise<boolean> => {
+		if (!time) time = await this.current();
+		if (!time) return false;
+		const { workspace_id, id } = time;
 		const { data } = await workspaceApi(workspace_id).patch<toggl.timeTrack.Api>(`/${id}/stop`);
-		console.log(`stopped: [ ${chalk.cyan(data.description)} ]`);
+		console.log(`Toggl stopped: [ ${chalk.cyan(data.description)} ]`);
 		return true;
 	};
 
@@ -61,6 +61,29 @@ class TogglTimeEntriesLoad {
 		const last = await this.getLastOfTask();
 		if (!last) return false;
 		return this.startWithTime(last);
+	};
+
+	create = async (
+		payload: { description: string; tag: string },
+		metadata: toggl.Metadata
+	): Promise<void> => {
+		const current = await this.current();
+		if (current) this.stop(current);
+
+		const tags = metadata.tags.filter(tag => tag.name === payload.tag);
+
+		const body: ITimeTrackCreateBody = {
+			start: new Date().toISOString(),
+			duration: -1,
+			description: payload.description,
+			created_with: 'laziness',
+			tags: tags.map(tag => tag.name),
+			tag_ids: tags.map(tag => tag.id),
+			user_id: metadata.userId,
+			workspace_id: metadata.workspaceId,
+		};
+		await workspaceApi(metadata.workspaceId).post('', body);
+		console.log(`started: [ ${chalk.cyan(body.description)} ]`);
 	};
 
 	private startWithTime = async (time: toggl.TimeTrack) => {

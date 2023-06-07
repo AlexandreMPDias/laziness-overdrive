@@ -2,8 +2,8 @@ import yargs, { Argv, InferredOptionType, Options, PositionalOptions } from 'yar
 import { hideBin } from 'yargs/helpers';
 import { ChangeArgv } from './types.js';
 
-type CommandInput = {
-	name?: string;
+type CommandInput<Name extends string = string> = {
+	name: Name;
 	command?: string;
 	description: string;
 	depth: number;
@@ -11,15 +11,16 @@ type CommandInput = {
 	handle?(argv: any): any;
 };
 
-export abstract class BaseCommandAdapter<T = {}> {
+export abstract class BaseCommandAdapter<T = {}, Name extends string = string> {
 	protected builders: Array<ChangeArgv<any, any>> = [];
 	protected optionValues: Array<InferredOptionType<Options>> = [];
 	protected positionalValues: Array<InferredOptionType<PositionalOptions>> = [];
-	protected readonly input: CommandInput;
+	protected readonly input: CommandInput<Name>;
 	protected abstract update<A>(change: ChangeArgv<T, A>): any;
 
-	constructor(input: Partial<CommandInput>) {
+	constructor(input: Partial<CommandInput<Name>>) {
 		this.input = {
+			name: 'n/a' as any,
 			depth: 0,
 			description: '',
 			useCommand: false,

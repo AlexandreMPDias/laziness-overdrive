@@ -9,8 +9,11 @@ import { CamelCaseKey, ChangeArgv, CommandLike } from './types.js';
 import { BaseCommandAdapter } from './adapter.js';
 export type { CommandLike };
 
-export class Command<T = {}> extends BaseCommandAdapter<T> implements CommandLike {
-	protected update = <A>(change: ChangeArgv<T, A>): Command<A> => {
+export class Command<T = {}, Name extends string = string>
+	extends BaseCommandAdapter<T, Name>
+	implements CommandLike
+{
+	protected update = <A>(change: ChangeArgv<T, A>): Command<A, Name> => {
 		this.builders.push(change);
 		return this as any;
 	};
@@ -18,14 +21,14 @@ export class Command<T = {}> extends BaseCommandAdapter<T> implements CommandLik
 	positional = <K extends string, O extends PositionalOptions>(
 		key: K,
 		opt: O
-	): Command<T & { [key in K]: InferredOptionType<O> }> => {
+	): Command<T & { [key in K]: InferredOptionType<O> }, Name> => {
 		this.positionalValues.push({ ...opt, key });
 		return this.update(y => y.positional(key, opt));
 	};
 
 	options = <O extends { [key: string]: Options }>(
 		options: O
-	): Command<Omit<T, keyof O> & InferredOptionTypes<O>> => {
+	): Command<Omit<T, keyof O> & InferredOptionTypes<O>, Name> => {
 		this.optionValues.push(Object.values(options));
 		return this.update(y => y.options(options));
 	};
@@ -47,7 +50,7 @@ export class Command<T = {}> extends BaseCommandAdapter<T> implements CommandLik
 		return this;
 	};
 
-	public get name() {
-		return this.input.name ?? '';
+	public get name(): Name {
+		return this.input.name;
 	}
 }
